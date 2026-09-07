@@ -2,7 +2,9 @@
 #
 # Summary: Run an executable with the selected Python version
 #
-# Usage: pyenv exec <command> [arg1 arg2...]
+# Usage: pyenv exec [-E|--environment] <command> [arg1 arg2...]
+#
+#    -E  Modify Python runtime environment, such as $PYTHONHOME, for the called executable.
 #
 # Runs an executable by first preparing PATH so that the selected Python
 # version's `bin' directory is at the front.
@@ -18,7 +20,14 @@ set -e
 
 # Provide pyenv completions
 if [ "$1" = "--complete" ]; then
+  echo --environment
   exec pyenv-shims --short
+fi
+
+unset MODIFY_ENV
+if [ "$1" = "-E" ] || [ "$1" = "--environment" ]; then
+  MODIFY_ENV=true
+  shift
 fi
 
 PYENV_VERSION="$(pyenv-version-name -f)"
@@ -53,5 +62,9 @@ shift 1
 if [ "${PYENV_BIN_PATH#${PYENV_ROOT}}" != "${PYENV_BIN_PATH}" ]; then
   # Only add to $PATH for non-system version.
   export PATH="${PYENV_BIN_PATH}:${PATH}"
+fi
+if [ -n "$MODIFY_ENV" ]; then
+  export PYTHONHOME="$(pyenv-prefix)"
+  export LD_LIBRARY_PATH="${PYTHONHOME}/lib:${LD_LIBRARY_PATH}"
 fi
 exec "$PYENV_COMMAND_PATH" "$@"

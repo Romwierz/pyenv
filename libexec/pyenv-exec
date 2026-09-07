@@ -65,6 +65,6 @@ if [ "${PYENV_BIN_PATH#${PYENV_ROOT}}" != "${PYENV_BIN_PATH}" ]; then
 fi
 if [ -n "$MODIFY_ENV" ]; then
   export PYTHONHOME="$(pyenv-prefix)"
-  export LD_LIBRARY_PATH="${PYTHONHOME}/lib:${LD_LIBRARY_PATH}"
+  export LD_LIBRARY_PATH="${PYTHONHOME}/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
 fi
 exec "$PYENV_COMMAND_PATH" "$@"

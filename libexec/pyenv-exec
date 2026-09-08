@@ -71,9 +71,9 @@ if [ -n "$MODIFY_ENV" ]; then
   # Check if multiple Python versions are selected
   VERSIONS=$(pyenv-prefix)
   if [[ "$VERSIONS" == *:* ]]; then
-    echo 'Warning: multiple Python versions are selected'
+    echo 'Warning: multiple Python versions are selected' >&2
     VERSION="${VERSIONS%%:*}"
-    echo "Using the first one available (${VERSION##*/})"
+    echo "Using the first one available (${VERSION##*/})" >&2
   else
     VERSION="$VERSIONS"
   fi

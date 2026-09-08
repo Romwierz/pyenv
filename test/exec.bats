@@ -34,6 +34,7 @@ EOF
   assert_success
   assert_output <<OUT
 --help
+--environment
 fab
 python
 OUT

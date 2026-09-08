@@ -68,7 +68,18 @@ if [ "${PYENV_BIN_PATH#${PYENV_ROOT}}" != "${PYENV_BIN_PATH}" ]; then
   export PATH="${PYENV_BIN_PATH}:${PATH}"
 fi
 if [ -n "$MODIFY_ENV" ]; then
-  export PYTHONHOME="$(pyenv-prefix)"
+  # Check if multiple Python versions are selected
+  VERSIONS=$(pyenv-prefix)
+  if [[ "$VERSIONS" == *:* ]]; then
+    echo 'Warning: multiple Python versions are selected'
+    VERSION="${VERSIONS%%:*}"
+    echo "Using the first one available (${VERSION##*/})"
+  else
+    VERSION="$VERSIONS"
+  fi
+
+  # Assign the correct version of PYTHONHOME
+  export PYTHONHOME="$VERSION"
   export LD_LIBRARY_PATH="${PYTHONHOME}/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
 fi
 exec "$PYENV_COMMAND_PATH" "$@"

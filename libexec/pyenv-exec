@@ -9,6 +9,7 @@
 #        exact library path.
 #        WARNING! For the running command and its child processes, this will
 #        break linkage for programs that expect to be linked to system libpython!
+#        This option is Linux only.
 #
 # Runs an executable by first preparing PATH so that the selected Python
 # version's `bin' directory is at the front.
@@ -67,7 +68,7 @@ if [ "${PYENV_BIN_PATH#${PYENV_ROOT}}" != "${PYENV_BIN_PATH}" ]; then
   # Only add to $PATH for non-system version.
   export PATH="${PYENV_BIN_PATH}:${PATH}"
 fi
-if [ -n "$MODIFY_ENV" ]; then
+if [ -n "$MODIFY_ENV" ] && [ "$(uname -s)" = Linux ]; then
   # Check if multiple Python versions are selected
   VERSIONS=$(pyenv-prefix)
   if [[ "$VERSIONS" == *:* ]]; then

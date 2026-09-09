@@ -70,7 +70,7 @@ if [ "${PYENV_BIN_PATH#${PYENV_ROOT}}" != "${PYENV_BIN_PATH}" ]; then
 fi
 if [ -n "$MODIFY_ENV" ]; then
   if [ "$(uname -s)" != Linux ]; then
-    echo 'Error: the -N option is supported only on Linux' >&2
+    echo 'Error: the --environment option is supported only on Linux' >&2
     exit 1
   fi
 

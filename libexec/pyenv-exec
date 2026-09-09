@@ -68,7 +68,12 @@ if [ "${PYENV_BIN_PATH#${PYENV_ROOT}}" != "${PYENV_BIN_PATH}" ]; then
   # Only add to $PATH for non-system version.
   export PATH="${PYENV_BIN_PATH}:${PATH}"
 fi
-if [ -n "$MODIFY_ENV" ] && [ "$(uname -s)" = Linux ]; then
+if [ -n "$MODIFY_ENV" ]; then
+  if [ "$(uname -s)" != Linux ]; then
+    echo 'Error: the -N option is supported only on Linux' >&2
+    exit 1
+  fi
+
   # Check if multiple Python versions are selected
   VERSIONS=$(pyenv-prefix)
   if [[ "$VERSIONS" == *:* ]]; then

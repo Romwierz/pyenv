@@ -2,9 +2,9 @@
 #
 # Summary: Run an executable with the selected Python version
 #
-# Usage: pyenv exec [-E|--environment] <command> [arg1 arg2...]
+# Usage: pyenv exec [-N|--environment] <command> [arg1 arg2...]
 #
-#    -E  Set PYTHONHOME and LD_LIBRARY_PATH envvars for the running command.
+#    -N  Set PYTHONHOME and LD_LIBRARY_PATH envvars for the running command.
 #        This allows to run programs that embed Python without using rpath or
 #        exact library path.
 #        WARNING! For the running command and its child processes, this will
@@ -29,7 +29,7 @@ if [ "$1" = "--complete" ]; then
 fi
 
 unset MODIFY_ENV
-if [ "$1" = "-E" ] || [ "$1" = "--environment" ]; then
+if [ "$1" = "-N" ] || [ "$1" = "--environment" ]; then
   MODIFY_ENV=true
   shift
 fi
